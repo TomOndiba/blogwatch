@@ -3,13 +3,56 @@ BlogWatch
 
 o Introduction
 o Installation
+o Usage
+o Cron setup
 o More information
 
 Introduction
 ------------
+This plugin allows you to subscribe to blog posts and group topic discussions,
+sending you an email whenever a comment is added to a blog post or a reply is
+added to a group topic discussion to which you are subscribed.
 
 Installation
 ------------
+Download the zip file and extract to your Elgg mod directory. Rename to blogwatch and
+enable the plugin in your Elgg's Tool Administration area.
+
+Usage
+-----
+When you enable the plugin, a new button will appear on all blog post and topic
+discussion pages, "Subscribe to this post". If you click the button, it will change
+to "Unsubscribe from this post" and another button will appear, "Show subscribers".
+If you click on the Show subscribers button, a pop-up window will appear with the
+profile icons and names of all users who are currently subscribed to that blog post
+or topic discussion.
+You will receive an email from the Elgg system when someone comments on the blog post
+or replies to the topic discussion.
+If you're not interested in the post or topic any more, just click on the
+"Unsubscribe from this post" button.
+
+Cron setup
+----------
+Post notifications are not immediate. Instead, a cron job runs every five minutes
+by default and generates the notifications from information recorded in the database.
+The following is an example of how to setup the Elgg cron environment.
+
+This is taken from:
+http://trac.elgg.org/elgg/browser/trunk/crontab.example
+
+GET='/path/to/wget --no-check-certificate --output-document=/dev/null --output-file=/dev/null'
+ELGG='http://localhost/elgg/'
+
+@reboot $GET ${ELGG}pg/cron/reboot/
+* * * * * $GET ${ELGG}pg/cron/minute/
+*/5 * * * * $GET ${ELGG}pg/cron/fiveminute/
+15,30,45,59 * * * * $GET ${ELGG}pg/cron/fifteenmin/
+30,59 * * * * $GET ${ELGG}pg/cron/halfhour/
+@hourly $GET ${ELGG}pg/cron/hourly/
+@daily $GET ${ELGG}pg/cron/daily/
+@weekly $GET ${ELGG}pg/cron/weekly/
+@monthly $GET ${ELGG}pg/cron/monthly/
+@yearly $GET ${ELGG}pg/cron/yearly/
 
 More information
 ----------------
