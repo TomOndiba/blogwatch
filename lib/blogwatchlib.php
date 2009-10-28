@@ -52,7 +52,26 @@ function get_subscribers($blog_guid) {
 }
 
 function blogwatch_cron($hook, $entity_type, $returnvalue, $params) {
+	test("blogwatch_cron");
+	global $CONFIG;
 	$resulttext = elgg_echo("blogwatch:notifier");
+	
+	// Default is 5 minutes
+	$interval = (5 * 60);
+	
+	$now = (int)strtotime("now");
+	
+	$i = $now - $interval;
+
+	test("SELECT * from {$CONFIG->dbprefix}blogwatch where updated < {$i}");
+	
+	$rows = get_data("SELECT * from {$CONFIG->dbprefix}blogwatch where updated < {$i}");
+	foreach ($rows as $row) {
+		$objarray = (array)$row;
+		$user = get_user_by_username($objarray['username']);
+		test("this needs emailed : ".$user->email);
+	}
+	
 	return $returnvalue . $resulttext;
 }
 
