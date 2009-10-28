@@ -94,7 +94,6 @@ class BlogWatch extends ElggEntity {
 	}
 	
 	public function has_subscribers() {
-		$this->debug("HERE1");
 		if (count($this->subscribers) > 0) return true;
 		return false;
 	}
