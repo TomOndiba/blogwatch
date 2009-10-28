@@ -53,7 +53,6 @@ function get_subscribers($blog_guid) {
 
 function blogwatch_cron($hook, $entity_type, $returnvalue, $params) {
 	$resulttext = elgg_echo("blogwatch:notifier");
-	test($resulttext);
 	return $returnvalue . $resulttext;
 }
 
