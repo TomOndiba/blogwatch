@@ -22,5 +22,5 @@
 <script type="text/javascript" src="<? echo $vars['url']; ?>mod/blogwatch/lib/js/thickbox.js"></script>
 
 <style type="text/css" media="all">
-@import "<? echo $vars['url']; ?>mod/blogwatch/lib/js/thickbox.css";
+@import "<? echo $vars['url']; ?>mod/blogwatch/lib/js/thickbox-elgg.css";
 </style>
