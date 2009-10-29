@@ -39,5 +39,6 @@ if (get_input("blogwatch_unsubscribe_button") != "") {
 else if (get_input("show_subscribers_button") != "") {
 }
 
-forward(get_input("blog_url"));
+// The forward doesn't work for group topics due to &amp;
+forward(str_replace("amp;", "", get_input("blog_url")));
 ?>
