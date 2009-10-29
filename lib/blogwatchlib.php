@@ -52,7 +52,7 @@ function is_blog_subscriber($blog_guid, $username) {
  * @return true
  */
 function blogwatch_new_comment($event, $object_type, $object) {
-	if ($object->getSubtype() == "blog") {
+	if (($object->getSubtype() == "blog") || ($object->getSubtype() == "groupforumtopic")) {
 		if (($blog_watch = load_blog($object->getGUID())) != null) {
 			$blog_watch->new_comment();
 		}
@@ -70,11 +70,8 @@ function blogwatch_new_comment($event, $object_type, $object) {
  * @return true
  */
 function blogwatch_delete_subscriptions($event, $object_type, $object) {
-	test("blogwatch_delete_subscriptions");
-	if ($object->getSubtype() == "blog") {
-		test("blogwatch_delete_subscriptions::blog");
+	if (($object->getSubtype() == "blog") || ($object->getSubtype() == "groupforumtopic")) {
 		if (($blog_watch = load_blog($object->getGUID())) != null) {
-			test("deleting : ".$blog_watch->blog_url);
 			$blog_watch->delete_all_subscribers();
 			$blog_watch->delete();
 		}
