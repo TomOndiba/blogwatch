@@ -11,7 +11,8 @@ Introduction
 ------------
 This plugin allows you to subscribe to blog posts and group topic discussions,
 sending you an email whenever a comment is added to a blog post or a reply is
-added to a group topic discussion to which you are subscribed.
+added to a group topic discussion to which you are subscribed. It also adds a
+"My Subscriptions" button on your profile status page.
 
 Installation
 ------------
@@ -21,15 +22,15 @@ enable the plugin in your Elgg's Tool Administration area.
 Usage
 -----
 When you enable the plugin, a new button will appear on all blog post and topic
-discussion pages, "Subscribe to this post". If you click the button, it will change
-to "Unsubscribe from this post" and another button will appear, "Show subscribers".
+discussion pages, "Subscribe". If you click the button, it will change
+to "Unsubscribe" and another button will appear, "Show subscribers".
 If you click on the Show subscribers button, a pop-up window will appear with the
 profile icons and names of all users who are currently subscribed to that blog post
 or topic discussion.
 You will receive an email from the Elgg system when someone comments on the blog post
 or replies to the topic discussion.
 If you're not interested in the post or topic any more, just click on the
-"Unsubscribe from this post" button.
+"Unsubscribe" button.
 
 Cron setup
 ----------
