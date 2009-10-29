@@ -62,6 +62,28 @@ function blogwatch_new_comment($event, $object_type, $object) {
 }
 
 /**
+ * Deletes all subscriptions for a watched entity
+ * This function is an Elgg event handler for annotations.
+ * @param $event the event type
+ * @param $object_type The type of object (eg "user", "object")
+ * @param $object The object itself or null 
+ * @return true
+ */
+function blogwatch_delete_subscriptions($event, $object_type, $object) {
+	test("blogwatch_delete_subscriptions");
+	if ($object->getSubtype() == "blog") {
+		test("blogwatch_delete_subscriptions::blog");
+		if (($blog_watch = load_blog($object->getGUID())) != null) {
+			test("deleting : ".$blog_watch->blog_url);
+			$blog_watch->delete_all_subscribers();
+			$blog_watch->delete();
+		}
+	}
+	
+	return true;
+}
+
+/**
  * Determines whether a post or topic has subscribers
  * @param $blog_guid the GUID of the blog post that is being watched
  * @return true if there are subscribers, otherwise false
