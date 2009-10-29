@@ -18,7 +18,7 @@ require_once($CONFIG->pluginspath."blogwatch/lib/blogwatchlib.php");
 </style>
 
 <?
-if (isloggedin() && (stristr($_SERVER['REQUEST_URI'], "read"))) {
+if (isloggedin() && ((stristr($_SERVER['REQUEST_URI'], "read")) || (stristr($_SERVER['REQUEST_URI'], "topicposts")))) {
 	$subscribed = "no";
 	if (is_blog_subscriber($vars['entity']->getGUID(), $vars['user']->username)) {
 		$subscribed = "yes";
