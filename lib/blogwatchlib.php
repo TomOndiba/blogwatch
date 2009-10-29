@@ -1,6 +1,23 @@
 <?
+/**
+ * BlogWatch utility library
+ *
+ * This file contains convenience functions that view can use to
+ * interact with the underlying BlogWatch instances which 
+ * represent blog post and topic notification subscribers.
+ *
+ * @author Alistair Young <alistair@codebrane.com>
+ * @package BlogWatch
+ */
+
 require_once("blogwatch_class.php");
 
+/**
+ * Loads the BlogWatch class associated with the given entity id
+ * @param $blog_guid the GUID of the blog post that is being watched
+ * @return BlogWatch instance representing the subscribers of the post
+ *         or null if it can't find one
+ */
 function load_blog($blog_guid) {
 	$blog_watch_objects = get_entities_from_metadata("watched_guid", $blog_guid);
 	if ($blog_watch_objects) {
@@ -12,6 +29,12 @@ function load_blog($blog_guid) {
 	return null;
 }
 
+/**
+ * Determines whether a user is subscribed to a post or topic
+ * @param $blog_guid the GUID of the blog post that is being watched
+ * @param $username the username of the user
+ * @return true if they are subscribed, otherwise false
+ */
 function is_blog_subscriber($blog_guid, $username) {
 	if (($blog_watch = load_blog($blog_guid)) != null) {
 		return $blog_watch->is_subscriber($username);
@@ -20,6 +43,14 @@ function is_blog_subscriber($blog_guid, $username) {
 	return false;
 }
 
+/**
+ * Marks a BlogWatch as having a new comment or reply.
+ * This function is an Elgg event handler for annotations.
+ * @param $event the event type
+ * @param $object_type The type of object (eg "user", "object")
+ * @param $object The object itself or null 
+ * @return true
+ */
 function blogwatch_new_comment($event, $object_type, $object) {
 	if ($object->getSubtype() == "blog") {
 		if (($blog_watch = load_blog($object->getGUID())) != null) {
@@ -30,6 +61,11 @@ function blogwatch_new_comment($event, $object_type, $object) {
 	return true;
 }
 
+/**
+ * Determines whether a post or topic has subscribers
+ * @param $blog_guid the GUID of the blog post that is being watched
+ * @return true if there are subscribers, otherwise false
+ */
 function blog_has_subscribers($blog_guid) {
 	if (($blog_watch = load_blog($blog_guid)) != null) {
 		return true;
@@ -37,6 +73,12 @@ function blog_has_subscribers($blog_guid) {
 	return false;
 }
 
+/**
+ * Gets all the subscribers of a post or topic
+ * @param $blog_guid the GUID of the blog post that is being watched
+ * @return array of Elgg User objects representing the subscribers
+ *         or null if there are no subscribers
+ */
 function get_subscribers($blog_guid) {
 	if (($blog_watch = load_blog($blog_guid)) != null) {
 		$usernames = explode(",", $blog_watch->get_subscribers());
@@ -51,6 +93,11 @@ function get_subscribers($blog_guid) {
 	return null;
 }
 
+/**
+ * Determines whether a user has any subscriptions
+ * @param $username the username of the user
+ * @return true if they have subscriptions, otherwise false
+ */
 function user_has_subscriptions($username) {
 	global $CONFIG;
 	$rows = get_data("SELECT * from {$CONFIG->dbprefix}blogwatch where username = '{$username}'");
@@ -62,6 +109,12 @@ function user_has_subscriptions($username) {
 	}
 }
 
+/**
+ * Gets all the subscriptions for a user
+ * @param $username the username of the user
+ * @return array representing the user's subscriptions, of the form:
+ *         foreach ($subscriptions as $blog_guid => $blog_url)
+ */
 function get_user_subscriptions($username) {
 	global $CONFIG;
 	$rows = get_data("SELECT * from {$CONFIG->dbprefix}blogwatch where username = '{$username}'");
@@ -76,6 +129,17 @@ function get_user_subscriptions($username) {
 	return null;
 }
 
+/**
+ * Notifies users if their subscriptions have been updated with
+ * comments or replies. This is an Elgg Plugin Hook.
+ * @param $hook The hook being called
+ * @param $entity_type The type of entity you're being called on
+ * @param $returnvalue The return value. IMPORTANT: Unless you are
+ *                     adding to or otherwise changing the return value
+ *                     DO NOT RETURN ANYTHING
+ * @param $params An array of parameters
+ * @return $returnvalue plus a notification message
+ */
 function blogwatch_cron($hook, $entity_type, $returnvalue, $params) {
 	test("blogwatch_cron");
 	global $CONFIG;
@@ -88,7 +152,7 @@ function blogwatch_cron($hook, $entity_type, $returnvalue, $params) {
 	
 	$i = $now - $interval;
 
-	test("SELECT * from {$CONFIG->dbprefix}blogwatch where updated < {$i}");
+	test("SELECT * from {$CONFIG->dbprefix}blogwatch where updated > {$i}");
 	
 	$rows = get_data("SELECT * from {$CONFIG->dbprefix}blogwatch where updated < {$i}");
 	foreach ($rows as $row) {
