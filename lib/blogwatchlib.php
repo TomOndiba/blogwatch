@@ -141,24 +141,36 @@ function get_user_subscriptions($username) {
  * @return $returnvalue plus a notification message
  */
 function blogwatch_cron($hook, $entity_type, $returnvalue, $params) {
-	test("blogwatch_cron");
 	global $CONFIG;
-	$resulttext = elgg_echo("blogwatch:notifier");
+	$resulttext = "no notifications";
 	
-	// Default is 5 minutes
-	$interval = (5 * 60);
+	// Sort out when we last ran
+	$last_run;
+	$last_run_row = get_data_row("SELECT * from {$CONFIG->dbprefix}blogwatch_cron");
+	if ($last_run_row) {
+		$objarray = (array)$last_run_row;
+		$last_run = (int)$objarray['last_run'];
+		$now = (int)strtotime("now");
+		update_data("UPDATE {$CONFIG->dbprefix}blogwatch_cron set last_run ='{$now}'");
+	}
+	else {
+		$last_run = (int)strtotime("now");
+		insert_data("INSERT into {$CONFIG->dbprefix}blogwatch_cron (last_run) values ('{$last_run}')");
+	}
 	
-	$now = (int)strtotime("now");
-	
-	$i = $now - $interval;
-
-	test("SELECT * from {$CONFIG->dbprefix}blogwatch where updated > {$i}");
-	
-	$rows = get_data("SELECT * from {$CONFIG->dbprefix}blogwatch where updated < {$i}");
-	foreach ($rows as $row) {
-		$objarray = (array)$row;
-		$user = get_user_by_username($objarray['username']);
-		test("this needs emailed : ".$user->email);
+	$rows = get_data("SELECT * from {$CONFIG->dbprefix}blogwatch where updated > {$last_run}");
+	if ($rows) {
+		$resulttext = "notifications available";
+		foreach ($rows as $row) {
+			$objarray = (array)$row;
+			$user = get_user_by_username($objarray['username']);
+			notify_user($user->guid, $CONFIG->site->guid,
+				          "ELGG:".$CONFIG->site->name,
+				          "The following post or topic has been updated:\n\n".$objarray['blog_url'].
+				 					"\n\n".
+									"please note you may have to login before viewing the post or topic.\n",
+				          null, "");
+		}
 	}
 	
 	return $returnvalue . $resulttext;
