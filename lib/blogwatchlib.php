@@ -130,6 +130,31 @@ function get_user_subscriptions($username) {
 }
 
 /**
+ * Determines whether our database schema is ready
+ * @return true if the schema is installed, otherwise false
+ */
+function is_blogwatch_schema_installed() {
+	global $CONFIG;
+	try {
+		$last_run_row = get_data_row("SELECT * from {$CONFIG->dbprefix}blogwatch_cron");
+		return true;
+	}
+	catch(DatabaseException $de) {
+		return false;
+	}
+}
+
+/**
+ * Initialises our database schema
+ */
+function init_blogwatch_schema() {
+	global $CONFIG;
+	run_sql_script($CONFIG->path."mod/blogwatch/lib/blogwatch.sql");
+	$last_run = (int)strtotime("now");
+	insert_data("INSERT into {$CONFIG->dbprefix}blogwatch_cron (last_run) values ('{$last_run}')");
+}
+
+/**
  * Notifies users if their subscriptions have been updated with
  * comments or replies. This is an Elgg Plugin Hook.
  * @param $hook The hook being called
