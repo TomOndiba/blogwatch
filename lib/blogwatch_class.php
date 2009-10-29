@@ -112,6 +112,18 @@ class BlogWatch extends ElggEntity {
 	}
 	
 	/**
+	 * Deletes all subscribers from a watched entity
+	 */
+	public function delete_all_subscribers() {
+		global $CONFIG;
+		if (!$this->has_subscribers()) {
+			foreach ($this->subscribers as $key => $username) {
+				$this->remove_subscriber($username);
+			}
+		}
+	}
+	
+	/**
 	 * Adds a subscriber to the watched entity
 	 * @param $username the username to add as a subscriber
 	 */
