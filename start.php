@@ -19,6 +19,12 @@ global $CONFIG;
 function blogwatch_init() {
 	global $CONFIG;
 	
+	// Initialise our database tables
+	if (!is_blogwatch_schema_installed()) {
+		run_sql_script($CONFIG->path."mod/blogwatch/lib/blogwatch.sql");
+		init_blogwatch_schema();
+	}
+	
 	extend_view("object/blog", "blogwatch/blogwatch");
 	extend_view("forum/viewposts", "blogwatch/blogwatch", 1);
 	extend_view('metatags', 'blogwatch/metatags');
