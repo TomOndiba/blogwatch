@@ -21,7 +21,6 @@ function blogwatch_init() {
 	
 	// Initialise our database tables
 	if (!is_blogwatch_schema_installed()) {
-		run_sql_script($CONFIG->path."mod/blogwatch/lib/blogwatch.sql");
 		init_blogwatch_schema();
 	}
 	
