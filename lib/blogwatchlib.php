@@ -51,6 +51,31 @@ function get_subscribers($blog_guid) {
 	return null;
 }
 
+function user_has_subscriptions($username) {
+	global $CONFIG;
+	$rows = get_data("SELECT * from {$CONFIG->dbprefix}blogwatch where username = '{$username}'");
+	if ($rows) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+function get_user_subscriptions($username) {
+	global $CONFIG;
+	$rows = get_data("SELECT * from {$CONFIG->dbprefix}blogwatch where username = '{$username}'");
+	if ($rows) {
+		foreach ($rows as $row) {
+			$objarray = (array)$row;
+			$subscriptions[$objarray['blog_guid']] = $objarray['blog_url'];
+		}
+		return $subscriptions;
+	}
+	
+	return null;
+}
+
 function blogwatch_cron($hook, $entity_type, $returnvalue, $params) {
 	test("blogwatch_cron");
 	global $CONFIG;
