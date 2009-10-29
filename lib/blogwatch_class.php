@@ -111,7 +111,7 @@ class BlogWatch extends ElggEntity {
 	public function new_comment() {
 		global $CONFIG;
 		$now = (int)strtotime("now");
-		$result = update_data("UPDATE {$CONFIG->dbprefix}blogwatch set updated='{$now}' where blog_guid = {$this->watched_guid}");
+		$result = update_data("UPDATE {$CONFIG->dbprefix}blogwatch set updated ='{$now}' where blog_guid = {$this->watched_guid}");
 	}
 	
 	public function get_subscribers() {
