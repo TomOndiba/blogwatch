@@ -18,6 +18,9 @@ function blogwatch_init() {
 	extend_view("object/blog", "blogwatch/blogwatch");
 	extend_view("forum/viewposts", "blogwatch/blogwatch", 1);
 	extend_view('metatags', 'blogwatch/metatags');
+	if(isloggedin()) {
+		extend_view('profile/status', 'blogwatch/profile');
+	}
 }
 
 function blogwatch_inspector($event, $object_type, $object) {
@@ -45,6 +48,7 @@ register_plugin_hook('cron', "fiveminute", "blogwatch_cron");
 
 register_action("blogwatch/form", false, $CONFIG->pluginspath . "blogwatch/actions/form.php");
 register_action("blogwatch/subscribers", false, $CONFIG->pluginspath . "blogwatch/actions/subscribers.php");
+register_action("blogwatch/subscriptions", false, $CONFIG->pluginspath . "blogwatch/actions/subscriptions.php");
 
 register_entity_type('object', 'blogwatch');
 add_subtype('object', 'blogwatch', 'BlogWatch');
