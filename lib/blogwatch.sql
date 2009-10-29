@@ -6,3 +6,9 @@ CREATE TABLE elggblogwatch (
   updated int(11),
   PRIMARY KEY (id)
 );
+
+CREATE TABLE elggblogwatch_cron (
+  id int(11) NOT NULL auto_increment,
+  last_run int(11),
+  PRIMARY KEY (id)
+);
