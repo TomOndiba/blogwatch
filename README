@@ -10,7 +10,7 @@ o More information
 Introduction
 ------------
 This plugin allows you to subscribe to blog posts and group topic discussions,
-sending you an email whenever a comment is added to a blog post or a reply is
+sending you a message whenever a comment is added to a blog post or a reply is
 added to a group topic discussion to which you are subscribed. It also adds a
 "My Subscriptions" button on your profile status page.
 
@@ -27,10 +27,12 @@ to "Unsubscribe" and another button will appear, "Show subscribers".
 If you click on the Show subscribers button, a pop-up window will appear with the
 profile icons and names of all users who are currently subscribed to that blog post
 or topic discussion.
-You will receive an email from the Elgg system when someone comments on the blog post
+You will receive a message from the Elgg system when someone comments on the blog post
 or replies to the topic discussion.
 If you're not interested in the post or topic any more, just click on the
 "Unsubscribe" button.
+If a post or topic already has subscribers, you'll see the Show subscribers button
+even if you are not a subscriber.
 
 Cron setup
 ----------
@@ -57,3 +59,5 @@ ELGG='http://localhost/elgg/'
 
 More information
 ----------------
+http://codebrane.com/blog/?p=1125
+http://github.com/codebrane/blogwatch
