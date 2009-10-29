@@ -1,4 +1,4 @@
-CREATE TABLE elggblogwatch (
+CREATE TABLE prefix_blogwatch (
   id int(11) NOT NULL auto_increment,
   blog_guid char(10) NOT NULL,
   blog_url text NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE elggblogwatch (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE elggblogwatch_cron (
+CREATE TABLE prefix_blogwatch_cron (
   id int(11) NOT NULL auto_increment,
   last_run int(11),
   PRIMARY KEY (id)
