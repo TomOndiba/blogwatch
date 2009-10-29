@@ -35,6 +35,7 @@ function blogwatch_init() {
 // Register our event handlers
 register_elgg_event_handler("init", "system", "blogwatch_init");
 register_elgg_event_handler('annotate', 'object', 'blogwatch_new_comment');
+register_elgg_event_handler('delete', 'object', 'blogwatch_delete_subscriptions');
 
 // Register our cron handler
 register_plugin_hook('cron', "fiveminute", "blogwatch_cron");
