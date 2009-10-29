@@ -44,7 +44,7 @@ if (isloggedin() && (stristr($_SERVER['REQUEST_URI'], "read"))) {
 			<input name="blogwatch_unsubscribe_button" type="submit" class="submit_button" value="Unsubscribe from this post" />
 		<? } ?>
 		<? if (blog_has_subscribers($vars['entity']->getGUID())) { ?>
-			<input alt="<? echo $vars['url']."action/blogwatch/subscribers" ?>?blog_guid=<? echo $vars['entity']->getGUID() ?>&height=150&width=400" title="People who are subscribed to this post" class="thickbox" type="button" value="Show subscribers" />
+			<input alt="<? echo $vars['url']."action/blogwatch/subscribers" ?>?blog_guid=<? echo $vars['entity']->getGUID() ?>&height=300&width=800" title="People who are subscribed to this post" class="thickbox" type="button" value="Show subscribers" />
 			<!--
 			<input name="show_subscribers_button" type="submit" class="submit_button" value="Show subscribers" />
 			-->
