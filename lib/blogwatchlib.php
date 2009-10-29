@@ -208,9 +208,12 @@ function blogwatch_cron($hook, $entity_type, $returnvalue, $params) {
 		foreach ($rows as $row) {
 			$objarray = (array)$row;
 			$user = get_user_by_username($objarray['username']);
+			$entity = get_entity($objarray['blog_guid']);
 			notify_user($user->guid, $CONFIG->site->guid,
-				          "ELGG:".$CONFIG->site->name,
-				          "The following post or topic has been updated:\n\n".$objarray['blog_url'].
+				          $CONFIG->site->name." notification",
+				          "The following post or topic has been updated:\n\n".
+									$entity->title."\n".
+									$objarray['blog_url'].
 				 					"\n\n".
 									"please note you may have to login before viewing the post or topic.\n",
 				          null, "");
