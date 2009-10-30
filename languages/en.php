@@ -10,6 +10,9 @@
  */
 
 $english = array(
+	// River
+	"item:object:blogwatch" => "Updated blog post or group discussion topic",
+	
 	// Notification strings
 	"blogwatch:notify:subject" => "notification",
 	"blogwatch:notify:body:header" => "The following post or topic has been updated",
