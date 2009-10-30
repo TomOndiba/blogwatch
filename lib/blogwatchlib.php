@@ -186,7 +186,6 @@ function init_blogwatch_schema() {
  */
 function blogwatch_cron($hook, $entity_type, $returnvalue, $params) {
 	global $CONFIG;
-	$resulttext = "no notifications";
 	
 	// Sort out when we last ran
 	$last_run;
@@ -204,23 +203,23 @@ function blogwatch_cron($hook, $entity_type, $returnvalue, $params) {
 	
 	$rows = get_data("SELECT * from {$CONFIG->dbprefix}blogwatch where updated > {$last_run}");
 	if ($rows) {
-		$resulttext = "notifications available";
+		$resulttext = elgg_echo("blogwatch:cron:return:string");
 		foreach ($rows as $row) {
 			$objarray = (array)$row;
 			$user = get_user_by_username($objarray['username']);
 			$entity = get_entity($objarray['blog_guid']);
 			notify_user($user->guid, $CONFIG->site->guid,
-				          $CONFIG->site->name." notification",
-				          "The following post or topic has been updated:\n\n".
+				          $CONFIG->site->name." ".elgg_echo("blogwatch:notify:subject"),
+				          elgg_echo('blogwatch:notify:body::header').":\n\n".
 									$entity->title."\n".
 									$objarray['blog_url'].
 				 					"\n\n".
-									"please note you may have to login before viewing the post or topic.\n",
+									elgg_echo("blogwatch:notify:body:footer")."\n",
 				          null, "");
 		}
+		
+		return $returnvalue . elgg_echo("blogwatch:cron:return:string");
 	}
-	
-	return $returnvalue . $resulttext;
 }
 
 function test($m) {
