@@ -210,7 +210,7 @@ function blogwatch_cron($hook, $entity_type, $returnvalue, $params) {
 			$entity = get_entity($objarray['blog_guid']);
 			notify_user($user->guid, $CONFIG->site->guid,
 				          $CONFIG->site->name." ".elgg_echo("blogwatch:notify:subject"),
-				          elgg_echo('blogwatch:notify:body::header').":\n\n".
+				          elgg_echo('blogwatch:notify:body:header').":\n\n".
 									$entity->title."\n".
 									$objarray['blog_url'].
 				 					"\n\n".
