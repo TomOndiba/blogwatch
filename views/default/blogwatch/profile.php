@@ -16,7 +16,9 @@ $subscriptions_button_text = elgg_echo("blogwatch:view:profile:status:subscripti
 $subscriptions_popup_title = elgg_echo("blogwatch:view:profile:subscriptions:popup:title");
 ?>
 <?
-if (user_has_subscriptions($vars['user']->username)) {
+$page_owner = page_owner_entity();
+$current_user = $_SESSION['user'];
+if ((user_has_subscriptions($vars['user']->username)) && (stristr($_SERVER['REQUEST_URI'], "profile")) && ($page_owner == $current_user)) {
 ?>
 
 	<input alt="<? echo $vars['url']."action/blogwatch/subscriptions" ?>?username=<? echo $vars['user']->username ?>&height=150&width=400" title="<? echo $subscriptions_popup_title ?>" class="thickbox" type="button" value="<? echo $subscriptions_button_text ?>" />
