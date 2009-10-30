@@ -11,11 +11,6 @@
 
 require_once($CONFIG->pluginspath."blogwatch/lib/blogwatchlib.php");
 ?>
-<script type="text/javascript" src="jquery-latest.pack.js"></script>
-<script type="text/javascript" src="thickbox.js"></script>
-<style type="text/css" media="all">
-@import "thickbox.css";
-</style>
 
 <?
 if (isloggedin() && ((stristr($_SERVER['REQUEST_URI'], "read")) || (stristr($_SERVER['REQUEST_URI'], "topicposts")))) {
