@@ -10,6 +10,12 @@
  */
 
 require_once($CONFIG->pluginspath."blogwatch/lib/blogwatchlib.php");
+
+// elgg_echo doesn't work inline
+$subscribe_button_text = elgg_echo("blogwatch:view:blogwatch:subscribe:button");
+$unsubscribe_button_text = elgg_echo("blogwatch:view:blogwatch:unsubscribe:button");
+$subscribers_button_text = elgg_echo("blogwatch:view:blogwatch:subscribers:button");
+$subscribers_pop_title = elgg_echo("blogwatch:view:blogwatch:subscribers:popup:title");
 ?>
 
 <?
@@ -34,15 +40,12 @@ if (isloggedin() && ((stristr($_SERVER['REQUEST_URI'], "read")) || (stristr($_SE
 <div class="contentWrapper singleview">
 	<form name="blogwatch_form" method="post" action="<? echo $vars['url']."action/blogwatch/form" ?>">
 		<? if ($subscribed == "no") { ?>
-			<input name="blogwatch_subscribe_button" type="submit" class="submit_button" value="Subscribe" />
+			<input name="blogwatch_subscribe_button" type="submit" class="submit_button" value="<? echo $subscribe_button_text ?>" />
 		<? } else { ?>
-			<input name="blogwatch_unsubscribe_button" type="submit" class="submit_button" value="Unsubscribe" />
+			<input name="blogwatch_unsubscribe_button" type="submit" class="submit_button" value="<? echo $unsubscribe_button_text ?>" />
 		<? } ?>
 		<? if (blog_has_subscribers($vars['entity']->getGUID())) { ?>
-			<input alt="<? echo $vars['url']."action/blogwatch/subscribers" ?>?blog_guid=<? echo $vars['entity']->getGUID() ?>&height=300&width=800" title="Subscribers to <? echo $vars['entity']->title ?>" class="thickbox" type="button" value="Show subscribers" />
-			<!--
-			<input name="show_subscribers_button" type="submit" class="submit_button" value="Show subscribers" />
-			-->
+			<input alt="<? echo $vars['url']."action/blogwatch/subscribers" ?>?blog_guid=<? echo $vars['entity']->getGUID() ?>&height=300&width=800" title="<? echo $subscribers_pop_title ?> <? echo $vars['entity']->title ?>" class="thickbox" type="button" value="<? echo $subscribers_button_text ?>" />
 		<? } ?>
 		<input type="hidden" name="blog_guid" value="<? echo $vars['entity']->getGUID() ?>"/>
 		<input type="hidden" name="blog_url" value="<? echo $vars['entity']->getURL() ?>"/>
