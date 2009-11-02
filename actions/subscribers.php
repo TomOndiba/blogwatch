@@ -23,7 +23,7 @@ if ($subscribers != null) {
 	?><div class="contentWrapper singleview"><?
 	foreach ($subscribers as $user) {
 		echo "<div style=\"float: left; padding: 5px;\">";
-		echo "<a href=\"{$CONFIG->wwwroot}/pg/profile/{$user->username}\"><img src=\"{$user->getIcon("".$icon_size."")}\" title=\"{$user->username}\"/></a><br />";
+		echo "<a href=\"{$CONFIG->wwwroot}pg/profile/{$user->username}\"><img src=\"{$user->getIcon("".$icon_size."")}\" title=\"{$user->username}\"/></a><br />";
 		echo "{$user->username}";
 		echo "</div>";
 	}
