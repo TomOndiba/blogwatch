@@ -21,6 +21,8 @@ $current_user = $_SESSION['user'];
 if ((user_has_subscriptions($vars['user']->username)) && (stristr($_SERVER['REQUEST_URI'], "profile")) && ($page_owner == $current_user)) {
 ?>
 
-	<input alt="<? echo $vars['url']."action/blogwatch/subscriptions" ?>?username=<? echo $vars['user']->username ?>&height=150&width=400" title="<? echo $subscriptions_popup_title ?>" class="thickbox" type="button" value="<? echo $subscriptions_button_text ?>" />
+<? $url = elgg_add_action_tokens_to_url($vars['url']."action/blogwatch/subscriptions"); ?>
+
+	<input alt="<? echo $url; ?>&username=<? echo $vars['user']->username ?>&height=150&width=400" title="<? echo $subscriptions_popup_title ?>" class="thickbox" type="button" value="<? echo $subscriptions_button_text ?>" />
 
 <? } ?>
